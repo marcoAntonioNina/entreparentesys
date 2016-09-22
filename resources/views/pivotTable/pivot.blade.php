@@ -9,6 +9,7 @@
 
 @push('script-head')
 <!-- pivot table JS-->
+
 <script src="{{ asset('js/pivotTable/jsapi') }}"></script>
 
 <script src="{{ asset('js/pivotTable/jquery-ui.min.js') }}"></script>
@@ -17,6 +18,7 @@
 <script src="{{ asset('js/pivotTable/pivot.js') }}"></script>
 <script src="{{ asset('js/pivotTable/pivot.es.js') }}"></script>
 
+<script src="{{ asset('js/pivotTable/corechart.js') }}"></script>
 <script src="{{ asset('js/pivotTable/gchart_renderers.js') }}"></script>
 
 <script src="{{ asset('js/pivotTable/pivotExample.js') }}"></script>

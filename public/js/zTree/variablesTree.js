@@ -9,10 +9,25 @@ var beforeDrag = function (treeId, treeNodes) {
 }
 var beforeDrop = function (treeId, treeNodes, targetNode, moveType) {
     if (targetNode.id == 'var-001' || targetNode.id == 'rows-001' || targetNode.id == 'cols-001' ) {
+        if (moveType == 'prev' || moveType == 'next') {
+            return false;
+        }
         return targetNode ? targetNode.drop !== false : true;
     } else {
         return false;
     }
+}
+function onDrag(event, treeId, treeNodes) {
+    className = (className === "dark" ? "":"dark");
+    showLog("[ "+getTime()+" onDrag ]&nbsp;&nbsp;&nbsp;&nbsp; drag: " + treeNodes.length + " nodes." );
+}
+function onDrop(event, treeId, treeNodes, targetNode, moveType, isCopy) {
+    var zTree = $.fn.zTree.getZTreeObj("variablesTree");
+    var nodes = zTree.getNodes();
+    $.each(nodes, function (index, value) {
+        console.log(value);
+        value.isParent = true;
+    });
 }
 
 var setCheck = function () {
@@ -78,6 +93,7 @@ var generateVariables = function () {
 
 var settingVar = {
     edit: {
+        autoExpandTrigger: true,
         enable: true,
         showRemoveBtn: false,
         showRenameBtn: false
@@ -89,7 +105,9 @@ var settingVar = {
     },
     callback: {
         beforeDrag: beforeDrag,
-        beforeDrop: beforeDrop
+        beforeDrop: beforeDrop,
+        onDrag: onDrag,
+        onDrop: onDrop,
     }
 };
 
@@ -132,7 +150,9 @@ var generateVariablesTree = function (data, mps, renderers) {
 
 
     $.fn.zTree.init($("#variablesTree"), settingVar, zNodesVar);
+
     setCheck();
+    $("#callbackTrigger").bind("change", {}, setTrigger);
     $("#copy").bind("change", setCheck);
     $("#move").bind("change", setCheck);
     $("#prev").bind("change", setCheck);
